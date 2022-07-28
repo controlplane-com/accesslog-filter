@@ -19,14 +19,14 @@ source_uri = "s3://julian-log-router-test/cpln-test/"
 dest_uri = "s3://julian-log-router-filtered/access-logs-only"
 ```
 
-- `region`: the region where both the source and destination bucket exist. This region will also host the lambda function
+- `region`: the region where both the source and destination bucket exist. This region will also host the lambda function.
 - `source_uri`: an S3 path in the format `s3://bucket/path/to/what/ever`. Only files with this key prefix are considered. Used to filter by org.
 - `dest_uri`: an S3 path in the format `s3://bucket/path/to/what/ever`. Files will end up here after filtering.
 
 # Prerequisites
 
 - At least Terraform 0.14
-- Both buckets must exist. You probably want to setup retention policy anyway.
+- Both buckets must exist. You probably want to setup retention policy anyway
 - The role under which you run TF must be able to create Roles and Policies (IAM)
 
 # What gets created under my account?
@@ -46,6 +46,6 @@ An empty file is just not written to the destination bucket. In CloudWatch, you 
 2022-07-28T14:15:13.018+03:00	file prefix/my-org/2022/07/28/11/05/XrowrWy2.jsonl does not contain access logs
 ```
 
-The lambda function tries its best to preserve the key structure of the processed files. For example if the input file is `{source_uri}/acme-org/2022/07/28/04/30/8Gdd2dwZ.jsonl`, the the resulting file will end up in `{dest_uri}/acme-org/2022/07/28/04/30/8Gdd2dwZ.jsonl`.
+The lambda function tries its best to preserve the key structure of the processed files. For example if the input file is `{source_uri}/acme-org/2022/07/28/04/30/8Gdd2dwZ.jsonl`, then the resulting file will end up in `{dest_uri}/acme-org/2022/07/28/04/30/8Gdd2dwZ.jsonl`.
 
 Files are gzipped (level 9) before uploading them to the destinatiob bucket.
